@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>THIS IS CART PAGE</title>
+  <meta charset="UTF-8">
+</head>
+<style>
+  h1 {
+    font-size: 60px;
+    text-align: center;
+    background-color: teal;
+    text-shadow: 2px 2px greenyellow;
+  }
+
+  h2 {
+    font-size: 30px;
+    text-align: center;
+    background-color: tomato;
+    text-shadow: 2px 2px blueviolet;
+  }
+</style>
+
+<script>
+  function orders() {
+    var final = 0;
+    fetch('http://localhost:3000/carts')
+      .then(response => {
+        console.log(response);
+        return response.json();
+      })
+      .then(json => {
+        let abc = `<div></div> `
+        let xyz = `<div></div>`
+
+        json.forEach(cart => {
+
+          var n = cart.name;
+          var res = n.substring(n.length, n.indexOf(',') + 1);
+          final = Number(res) + Number(final);
+          abc += `<h2>${cart.name}</h2>`;
+        });
+        xyz += `<h1> Total : ${final}</h1>`;
+        document.getElementById("a").innerHTML = abc;
+        document.getElementById("b").innerHTML = xyz;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+  orders();
+
+</script>
+
+<body>
+  <h1>CART DETAILS</h1>
+  <div id="a"></div>
+  <div id="b"></div>
+
+</body>
+
+</html>
