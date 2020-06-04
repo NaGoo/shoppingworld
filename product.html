@@ -15,25 +15,6 @@
     background-color: teal;
     text-shadow: 2px 2px greenyellow;
   }
-
-
-
-  .a,
-  b {
-    margin-top: 50px;
-    margin-left: 150px;
-    width: 30%;
-    height: 360%;
-    background-color: #ffffff;
-    float: left;
-
-  }
-
-
-  .abc {
-    text-align: center;
-
-  }
 </style>
 <script>
   function products() {
@@ -49,7 +30,7 @@
                     <h3>${product.name}</h3>
                     <img src=${product.image}>
                     <h3>${product.price}</h3>
-                    <button onClick="reply('${product.name},${product.price}')" >Add tO Cart</button>`;
+                    <button onClick="reply('${product.name}','${product.price}')" >Add tO Cart</button>`;
         });
         document.getElementById("shopping").innerHTML = items;
       })
@@ -58,7 +39,7 @@
       });
   }
   products();
-  function reply(name) {
+  function reply(name, price) {
     (async () => {
       const reply = await fetch('http://localhost:3000/carts', {
         method: 'POST',
@@ -66,12 +47,12 @@
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ "total": 100, "quantity": 1, "name": name, "price": 100 })
+        body: JSON.stringify({ "total": 100, "quantity": 1, "name": name, "price": Number(price) })
       });
       const content = await reply.json();
 
       console.log(content);
-      alert('added');
+      alert('added successfully');
     })();
 
 
