@@ -10,10 +10,60 @@
   }
 
   h1 {
-    font-size: 60px;
+    font-size: 72px;
     text-align: center;
     background-color: teal;
     text-shadow: 2px 2px greenyellow;
+  }
+
+  .login {
+    width: 320px;
+    height: 420px;
+    color: #ffffff;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    padding: 200px 60px;
+
+  }
+
+  .avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: 25%;
+    transform: translate(50%, 0%);
+  }
+
+  p,
+  h2 {
+    text-align: center;
+    color: blueviolet;
+    font-weight: bold;
+  }
+
+  .login input[type="text"] {
+    border: none;
+    border-bottom: 1px solid #ffffff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    width: 100%;
+
+  }
+
+  .login input {
+    width: 50%;
+    margin-bottom: 30px;
+    float: right;
+
+  }
+
+  .add:hover {
+    background-color: darkblue;
   }
 </style>
 <script>
@@ -29,8 +79,8 @@
           items += `
                     <h3>${product.name}</h3>
                     <img src=${product.image}>
-                    <h3>${product.price}</h3>
-                    <button onClick="reply('${product.name}','${product.price}')" >Add tO Cart</button>`;
+                    <h3>Rs.${product.price}</h3>
+                    <button class ="add" onClick="reply('${product.name}','${product.price}')" >Add tO Cart</button>`;
         });
         document.getElementById("shopping").innerHTML = items;
       })
@@ -40,6 +90,8 @@
   }
   products();
   function reply(name, price) {
+    var a = document.getElementById("Nameuser").value;
+
     (async () => {
       const reply = await fetch('http://localhost:3000/carts', {
         method: 'POST',
@@ -47,7 +99,7 @@
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ "total": 100, "quantity": 1, "name": name, "price": Number(price) })
+        body: JSON.stringify({ "username": String(a), "name": name, "price": Number(price) })
       });
       const content = await reply.json();
 
@@ -59,9 +111,36 @@
   }
 
 </script>
+<script>
+  function checklogin() {
+    var a = document.getElementById("Nameuser").value;
+    alert(a);
+  }
+  //  function gotocart() {
+
+  //   var a = document.getElementById("Nameuser").value;
+  //   window.location.href = 'cart.html?id=' + a;
+  // }
+
+</script>
 
 <body>
   <h1>SHOPPING WORLD</h1>
+  <div class="login">
+    <img src="user.jpg" class="avatar">
+    <form>
+      <p>
+
+      <h2> Customer Name</h2>
+
+      </p>
+      <input type="text" id="Nameuser" placeholder="Enter your name">
+      <!-- <input type="button" value="cart" onclick="gotocart()"> -->
+    </form>
+
+  </div>
+  <br>
+  <br>
   <div id="shopping"></div>
 </body>
 

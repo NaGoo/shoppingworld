@@ -25,15 +25,30 @@
     width: 70px;
     height: 20px;
   }
+
+  .rem:hover {
+    background-color: greenyellow;
+  }
 </style>
 
 <script>
   function orders() {
+
+    // const params = new URLSearchParams(window.location.search);
+    // var testing = params.get('id');
+    // alert(testing);
+
     var total = 0;
     fetch('http://localhost:3000/carts')
       .then(response => {
         console.log(response);
         return response.json();
+
+        // var jsondata = response.json();
+
+        // var filter = jsondata.filter(cart => cart.username == testing);
+        // console.log(filter);
+
       })
       .then(json => {
         let abc = `<div></div> `
@@ -44,9 +59,9 @@
           var n = cart.name;
           var res = cart.price;
           total = Number(res) + Number(total);
-          abc += `<h2>${cart.name}<span>  Price : ${cart.price}</span><button class="rem"onclick="reply(${cart.id})">remove</button></h2> `;
+          abc += `<h2> ${cart.username} ======> ${cart.name}<span>  : Rs. ${cart.price}</span><button class="rem"onclick="reply(${cart.id})">remove</button></h2> `;
         });
-        xyz += `<h1> Total : ${total}</h1>`;
+        xyz += `<h1> Total : Rs.${total}</h1>`;
         document.getElementById("id1").innerHTML = abc;
         document.getElementById("id2").innerHTML = xyz;
       })
